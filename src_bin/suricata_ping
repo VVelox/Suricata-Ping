@@ -1,0 +1,74 @@
+#!perl
+
+=head1 NAME
+
+suricata_ping - sends a ping out over the interfaces configured in a Suricata config
+
+=head1 SYNOPSIS
+
+suricata_ping
+
+=head1 DESCRIPTION
+
+
+
+=head1 FLAGS
+
+=cut
+
+use strict;
+use warnings;
+use Getopt::Long   qw(GetOptions);
+use Pod::Usage     qw( pod2usage );
+use Suricata::Ping ();
+
+sub main::VERSION_MESSAGE {
+	print 'suricata_ping v. ' . $Suricata::Ping::VERSION . "\n";
+}
+
+sub main::HELP_MESSAGE {
+	pod2usage( -exitval => 255, -verbose => 2, -output => \*STDOUT, );
+}
+
+my $help;
+my $version;
+my $config_file;
+my $pattern;
+my $ip;
+my $section;
+my $count;
+Getopt::Long::Configure('no_ignore_case');
+Getopt::Long::Configure('bundling');
+GetOptions(
+	'version' => \$version,
+	'v'       => \$version,
+	'help'    => \$help,
+	'h'       => \$help,
+	'f=s'     => \$config_file,
+	'p=s'     => \$pattern,
+	'i=s'     => \$ip,
+	's=s'     => \$section,
+	'c=s'     => \$count,
+);
+
+if ($version) {
+	&VERSION_MESSAGE;
+	exit 255;
+}
+
+if ($help) {
+	&HELP_MESSAGE;
+	exit 255;
+}
+
+my $suricata_ping = Suricata::Ping->new(
+	config_file => $config_file,
+	pattern     => $pattern,
+	ip          => $ip,
+	section     => $section,
+	count       => $count,
+);
+
+$suricata_ping->run;
+
+exit 0;
