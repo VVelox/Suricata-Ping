@@ -11,7 +11,7 @@ my %WriteMakefileArgs = (
 	LICENSE            => 'lgpl_2_1',
 	MIN_PERL_VERSION   => '5.006',
 	INST_SCRIPT        => 'bin',
-	EXE_FILES          => [ 'src_bin/suricata_ping' ],
+	EXE_FILES          => ['src_bin/suricata_ping'],
 	CONFIGURE_REQUIRES => {
 		'ExtUtils::MakeMaker' => '0',
 	},
@@ -25,8 +25,19 @@ my %WriteMakefileArgs = (
 		'File::Slurp'  => '0',
 		'Hash::Merge'  => '0',
 	},
-	dist  => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
-	clean => { FILES    => 'Suricata-Ping-*' },
+	dist       => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
+	clean      => { FILES    => 'Suricata-Ping-*' },
+	META_MERGE => {
+		"meta-spec" => { version => 2 },
+		resources   => {
+			repository => {
+				type => 'git',
+				url  => 'git@github.com:VVelox/Suricata-Ping.git',
+				web  => 'https://github.com/VVelox/Suricata-Ping',
+			},
+		},
+	}
+
 );
 
 # Compatibility with old versions of ExtUtils::MakeMaker
