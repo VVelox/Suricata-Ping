@@ -29,7 +29,17 @@ Perhaps a little code snippet.
 
     use Suricata::Ping;
 
-    my $suricata_ping=Suricata::Ping->new(config_file=>'/usr/local/etc/suricata/config.yaml');
+    my $suricata_ping;
+    eval {
+        $suricata_ping=Suricata::Ping->new(
+            config_file=>'/usr/local/etc/suricata/config.yaml'
+        );
+    };
+    if ($@) {
+        print $@."\n";
+        exit 1;
+    }
+    $suricata_ping->ping;
 
 =head1 SUBROUTINES/METHODS
 
@@ -220,6 +230,12 @@ sub new {
 =head2 ping
 
 Pings each interface.
+
+This does not return any status or the like.
+
+This requires ping be in the current path.
+
+    $suricata_ping->ping;
 
 =cut
 
