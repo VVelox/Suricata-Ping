@@ -69,6 +69,6 @@ my $suricata_ping = Suricata::Ping->new(
 	count       => $count,
 );
 
-$suricata_ping->run;
+$suricata_ping->ping;
 
 exit 0;
